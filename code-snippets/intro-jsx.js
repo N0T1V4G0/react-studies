@@ -1,5 +1,5 @@
-// See app here: https://codesandbox.io/s/introduction-to-jsx-forked-juknh?file=/src/index.js
-import React from 'react';
+// See app here: https://codesandbox.io/s/introduction-to-jsx-forked-juknh
+
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
