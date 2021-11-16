@@ -2,11 +2,12 @@ import React from 'react';
 
 class Form extends React.Component {
   render() {
+    const { controlValue, formValue } = this.props;
     return (
       <form action="">
         <label htmlFor="">
           Original:
-          <input type="text" />
+          <input type="text" value={formValue} onChange={controlValue} />
         </label>
       </form>
     );
