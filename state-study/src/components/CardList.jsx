@@ -8,17 +8,30 @@ class CardList extends Component {
       favorites: [],
     };
   }
+
+  handleSaveCourse = (i) => {
+    console.log(i);
+    const copyFavorites = this.state.favorites;
+    copyFavorites.push(i);
+    this.setState({
+      favorites: copyFavorites,
+    });
+  };
+
   render() {
     const { courseData } = this.props;
     const { favorites } = this.state;
     console.log(courseData);
-    return (
-      <div>
-        {courseData.map((course) => (
-          <CardUnit course={course} />
-        ))}
-      </div>
-    );
+    const courseArr = courseData.map((course, i) => (
+      <CardUnit
+        key={i}
+        course={course}
+        favorites={favorites}
+        handleSaveCourse={this.handleSaveCourse}
+      />
+    ));
+
+    return <div>{courseArr}</div>;
   }
 }
 
