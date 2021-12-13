@@ -9,12 +9,9 @@ class CardList extends Component {
     };
   }
 
-  handleSaveCourse = (i) => {
-    console.log(i);
-    const copyFavorites = this.state.favorites;
-    copyFavorites.push(i);
+  handleSaveCourse = (arr) => {
     this.setState({
-      favorites: copyFavorites,
+      favorites: arr,
     });
   };
 
