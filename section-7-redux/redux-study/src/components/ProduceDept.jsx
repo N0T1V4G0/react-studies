@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import updProduceProducts from '../store/actions/updProduceProducts';
 
 class ProduceDept extends Component {
+  incrementProducts = (operator, productIndex) => {
+    if (operator === '+') {
+      updProduceProducts();
+    } else if (operator === '-') {
+    }
+  };
+
   render() {
     const { produceData } = this.props;
     // console.log(produceData);
     const produceProducts = produceData.map((item, i) => (
-      <li key={i}>
-        {item.name} : {item.quantity} unidades
-      </li>
+      <div key={i}>
+        <li>
+          {item.name} : {item.quantity} unidades
+        </li>
+        <input
+          type="button"
+          value="+"
+          onClick={() => {
+            this.incrementProducts('+', i);
+          }}
+        />
+        <input type="button" value="-" />
+      </div>
     ));
 
     return (
