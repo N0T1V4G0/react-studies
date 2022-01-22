@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import updFrozenProducts from '../store/actions/updFrozenProducts';
 
 class FrozenDpt extends Component {
+  incrementProducts = (operator, productIndex) => {
+    if (operator === '+') {
+      updFrozenProducts();
+    } else if (operator === '-') {
+    }
+  };
+
   render() {
     const { frozenData } = this.props;
     // console.log(frozenData);
     const frozenProducts = frozenData.map((item, i) => (
-      <li key={i}>
-        {item.name} : {item.quantity} unidades
-      </li>
+      <div key={i}>
+        <li>
+          {item.name} : {item.quantity} unidades
+        </li>
+        <input
+          type="button"
+          value="+"
+          onClick={() => {
+            this.incrementProducts('+', i);
+          }}
+        />
+        <input type="button" value="-" />
+      </div>
     ));
 
     return (
@@ -21,7 +39,7 @@ class FrozenDpt extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     frozenData: state.frozen,
   };
