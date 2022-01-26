@@ -4,13 +4,15 @@ import Card from '../UI/Card';
 import './IngredientForm.css';
 
 const IngredientForm = React.memo((props) => {
+  const [nameInput, setNameInput] = useState('');
+  const [amountInput, setAmountInput] = useState('');
+
   const submitHandler = (event) => {
     event.preventDefault();
+    const { handleIngredientsSubmit } = props;
     // ...
+    handleIngredientsSubmit({ title: nameInput, amount: amountInput });
   };
-
-  const [nameInput, setNameInput] = useState('');
-  const [amountInput, setAmountInput] = useState('0');
 
   const handleNameInput = (e) => {
     const input = e.target.value;
