@@ -7,9 +7,27 @@ import Search from './Search';
 function Ingredients() {
   const [ingredients, setIngredients] = useState([]);
 
-  const handleIngredientsSubmit = (ingredient) => {
+  const handleRemoveIngredient = (id) => {
     setIngredients((prevState) => {
-      return [...prevState, { ...ingredient, id: Math.random().toString() }];
+      const ingredientsAfterRm = prevState.filter(
+        (ingredient) => ingredient.id !== id,
+      );
+      return ingredientsAfterRm;
+    });
+  };
+  const handleIngredientsSubmit = async (ingredient) => {
+    const response = await fetch(
+      'https://react-ingredients-17014-default-rtdb.firebaseio.com/ingredients.json',
+      {
+        method: 'POST',
+        body: JSON.stringify(ingredient),
+        headers: { 'Content-Type': 'aplication/json' },
+      },
+    );
+    const responseData = await response.json();
+    console.log(responseData);
+    setIngredients((prevState) => {
+      return [...prevState, { ...ingredient, id: responseData.name }];
     });
   };
 
@@ -19,7 +37,10 @@ function Ingredients() {
 
       <section>
         <Search />
-        <IngredientList ingredients={ingredients} onRemoveItem={() => {}} />
+        <IngredientList
+          ingredients={ingredients}
+          onRemoveItem={handleRemoveIngredient}
+        />
       </section>
     </div>
   );
