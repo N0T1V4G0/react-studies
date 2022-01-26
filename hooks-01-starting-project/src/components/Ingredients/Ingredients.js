@@ -1,11 +1,25 @@
-import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
+import { getIngredients, postIngredients } from '../../API/API';
 import IngredientList from './IngredientList';
 import IngredientForm from './IngredientForm';
 import Search from './Search';
 
 function Ingredients() {
   const [ingredients, setIngredients] = useState([]);
+
+  useEffect(() => {
+    getIngredients().then((resData) => {
+      const ingredientsArr = [];
+      for (let key in resData) {
+        ingredientsArr.push({
+          id: key,
+          title: resData[key].title,
+          amount: resData[key].amount,
+        });
+      }
+      setIngredients(ingredientsArr);
+    });
+  }, []);
 
   const handleRemoveIngredient = (id) => {
     setIngredients((prevState) => {
@@ -15,17 +29,9 @@ function Ingredients() {
       return ingredientsAfterRm;
     });
   };
+
   const handleIngredientsSubmit = async (ingredient) => {
-    const response = await fetch(
-      'https://react-ingredients-17014-default-rtdb.firebaseio.com/ingredients.json',
-      {
-        method: 'POST',
-        body: JSON.stringify(ingredient),
-        headers: { 'Content-Type': 'aplication/json' },
-      },
-    );
-    const responseData = await response.json();
-    console.log(responseData);
+    const responseData = await postIngredients(ingredient);
     setIngredients((prevState) => {
       return [...prevState, { ...ingredient, id: responseData.name }];
     });
@@ -34,7 +40,6 @@ function Ingredients() {
   return (
     <div className="App">
       <IngredientForm handleIngredientsSubmit={handleIngredientsSubmit} />
-
       <section>
         <Search />
         <IngredientList
